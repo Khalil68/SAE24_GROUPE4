@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAE 24</title>
+    {% load static %}
+    <link href="{% static 'main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+    <div class="drive">
+        <li><a href="/">SAE 24</a></li>
+    </div>
+        <ul class="nav-list" id="list">
+
+            <li class='dropdown'>
+                <a href="#" class="dropbtn navbartitle-font" id="coolthing">Liste</a>
+                <div class="dropdown-content">
+
+                </div>
+            </li>
+        </ul>
+
+
+        <div class="menu" id="button_menu" onclick="menu()">
+        <div class="ligne"></div>
+        <div class="ligne"></div>
+        <div class="ligne"></div>
+        </div>
+</nav>
+    <table>
+
+  <tr>
+    <th>Température</th>
+    <th>Date</th>
+    <th>Temp</th>
+  </tr>
+        <!--{% for form in formset %}-->
+  <tr>
+    <td>OUHO</td>   <!-- ici on mettra les {{form.temperature}}  par exemple-->
+    <td>OKAY</td>
+    <td>MANY</td>
+  </tr>
+        <!--{% endfor %}-->
+  <tr>
+    <td>NI NI </td>
+    <td>N A P S</td>
+    <td>NJNGNDGNFN</td>
+  </tr>
+</table>
+<script>
+    function menu(){
+    var nav = document.getElementById('list');
+        if(nav.style.display=="block"){
+            nav.style.display="none";
+        }else{
+            nav.style.display="block";
+        }
+    }
+</script>
+{% block content %}
+{% endblock %}
+</body>
+</html>
