@@ -17,15 +17,9 @@ body{background-color:#B0C4DE;font-family:system-ui,arial;display:flex;align-ite
     margin-top:30px;
 }
 
-table{
-  border-collapse: collapse;
-  margin-top:100px;
-}
-
-th, td{
-  border: 1px solid black;
-  padding: 10px;
-}
+table{border-collapse: collapse;margin-top:90px;}
+table > tbody > tr > th, table > tbody > tr > td{padding:20px;border:1px solid #222;background:white;font-family:tahoma;width:200px;text-align:center;}
+table > tbody > tr > th{background:#6495ED;color:#EEE;}
 
 .navbar{
     background-color:#6495ED;

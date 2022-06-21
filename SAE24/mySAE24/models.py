@@ -1,19 +1,30 @@
 from django.db import models
 
 #____________________________________________________________
-class test1(models.Model):
-    OKAY = models.CharField(max_length=100)
+class capteur1(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    nom_capteur = models.CharField(max_length=100)
+    piece = models.CharField(max_length=100)
+    emplacement_capteur = models.CharField(max_length=100)
 
 
     def __str__(self):
-        chaine = f"{self.OKAY}"
+        chaine = f"{self.id}"
         return chaine
 
-
+    #def dictionnaire(self):
+     #   return {"nom": self.nom, "descriptif": self.descriptif}
 #____________________________________________________________
-class test2(models.Model):
-    OUHO = models.BigIntegerField(null=True)
+class capteur2(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    nom_capteur = models.CharField(max_length=100)
+    piece = models.CharField(max_length=100)
+    emplacement_capteur = models.CharField(max_length=100)
+
 
     def __str__(self):
-        chaine = f"{self.OUHO}"
+        chaine = f"{self.id}"
         return chaine
+
+    #def dictionnaire(self):
+     #   return {"nom": self.nom, "descriptif": self.descriptif}
