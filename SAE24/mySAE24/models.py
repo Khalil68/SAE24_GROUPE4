@@ -23,4 +23,5 @@ class data(models.Model):
         return chaine
 
     def dico(self):
-        return {"nom": self.data,"piece": self.timestamp, "emplacement": self.capteur}
+        return {"data": self.data,"timestamp": self.timestamp, "capteur": self.capteur}
+
