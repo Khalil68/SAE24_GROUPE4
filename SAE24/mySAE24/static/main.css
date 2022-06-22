@@ -5,7 +5,6 @@
     font-weight:1;
     color: black;
     overflow-x:hidden;
-     overflow-y:hidden;
 }
 
 body{background-color:#B0C4DE;font-family:system-ui,arial;display:flex;align-items:center;flex-direction:column;}

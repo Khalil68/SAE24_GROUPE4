@@ -8,15 +8,17 @@
   <tr>
     <th> Température </th>
     <th> Date </th>
-    <th> Piece </th>
-    <th> Emplacement </th>
     <th> Capteur </th>
+    <th> Emplacement </th>
+    <th> Piece </th>
   </tr>
   {% for i in data %}
   <tr>
     <td> {{i.data}} </td>
     <td> {{i.timestamp}} </td>
     <td> {{i.capteur}} </td>
+    <td> {{i.emplacement}} </td>
+    <td> {{i.piece}} </td>
   </tr>
   {% endfor %}
   {% endif %}
