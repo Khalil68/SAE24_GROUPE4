@@ -1,6 +1,6 @@
 import random
 import mysql.connector
-
+import datetime
 from paho.mqtt import client as mqtt_client
 
 
@@ -11,6 +11,7 @@ topic = "IUT/Colmar/SAE24/Maison1"
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 
 id_donnee = 0
+id_capteur = 0
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -20,6 +21,9 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
+
+mycursor.execute("DELETE FROM mysae24_data")
+mycursor.execute("DELETE FROM mysae24_capteur")
 
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
@@ -33,31 +37,55 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
-def traiter_donnee(id,piece,date,time,temp):
+def traiter_donnee(id,piece,date,ti,temp):
     if id == "B8A5F3569EFF":
-        chaine = f"{id};{piece};{date};{time};{temp};"
+        chaine = f"{id};{piece};{date};{ti};{temp};"
         file = open("capteur1.csv", "a")
         file.write(chaine + "\n")
         file.close()
 
     if id == "A72E3F6B79BB":
-        chaine = f"{id};{piece};{date};{time};{temp};"
+        chaine = f"{id};{piece};{date};{ti};{temp};"
         file = open("capteur2.csv", "a")
         file.write(chaine + "\n")
         file.close()
 
-    timestamp = date + " , " + time
+    ep = datetime.datetime(1970, 1, 1, 0, 0, 0)
+    timestamp = (datetime.datetime.utcnow() - ep).total_seconds()
+
     global id_donnee
+    global id_capteur
     id_donnee += 1
     global mycursor
-    sql = "INSERT INTO mysae24_data (data,timestamp,capteur_id) VALUES ( %s, %s, %s)"
-    if id == 'A72E3F6B79BB':
-        val = (temp,timestamp,3)
-    if id == "B8A5F3569EFF":
-        val = (temp, timestamp,1)
+
+    sql_select_Query = "select * from mysae24_capteur"
+    cursor = mydb.cursor(dictionary=True)
+    cursor.execute(sql_select_Query)
+    capteurs = cursor.fetchall()
+    test = 0
+    for row in capteurs:
+        nom = row["nom"]
+        if nom == id:
+            test = 1
+    if test == 0:
+        id_capteur += 1
+        sql = "INSERT INTO mysae24_capteur (id,nom,piece,emplacement) VALUES (%s, %s, %s, %s)"
+        val = (id_capteur,id,piece,"blank")
+        mycursor.execute(sql, val)
+
+    sql = "INSERT INTO mysae24_data (id,data,timestamp,capteur) VALUES (%s, %s, %s, %s)"
+    sql_select_Query = "select * from mysae24_capteur"
+    cursor = mydb.cursor(dictionary=True)
+    cursor.execute(sql_select_Query)
+    capteurs = cursor.fetchall()
+    test = 0
+    for row in capteurs:
+        id_capteur = row['id']
+        nom = row["nom"]
+        if nom == id:
+            test = id_capteur
+    val = (id_donnee,temp,timestamp,test)
     mycursor.execute(sql, val)
-
-
     mydb.commit()
 
 

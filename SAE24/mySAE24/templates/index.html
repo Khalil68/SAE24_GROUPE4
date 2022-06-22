@@ -7,21 +7,31 @@
 <table>
   <tr>
     <th> Température </th>
-    <th> Date </th>
-    <th> Capteur </th>
-    <th> Emplacement </th>
+    <th> Timestamp </th>
     <th> Piece </th>
+    <th> Emplacement </th>
+    <th> Capteur </th>
   </tr>
   {% for i in data %}
   <tr>
     <td> {{i.data}} </td>
     <td> {{i.timestamp}} </td>
-    <td> {{i.capteur}} </td>
-    <td> {{i.emplacement}} </td>
     <td> {{i.piece}} </td>
+    <td> {{i.emplacement}} </td>
+    <td> {{i.capteur_nom}} </td>
   </tr>
   {% endfor %}
   {% endif %}
 </table>
+
+<script>
+
+function refresh(){
+location.reload()
+}
+
+setTimeout(refresh,5000);
+
+</script>
 
 {% endblock content %}

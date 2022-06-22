@@ -10,18 +10,17 @@ class capteur(models.Model):
         return chaine
 
     def dico(self):
-        return {"nom": self.nom,"piece": self.piece, "emplacement": self.emplacement}
+        return {"nom": self.nom, "emplacement": self.emplacement}
 
 
 class data(models.Model):
-    data = models.CharField(max_length=200)
-    timestamp = models.CharField(max_length=200)
-    capteur = models.ForeignKey("capteur", on_delete=models.CASCADE,blank=False)
+    data = models.CharField(max_length=100)
+    timestamp = models.CharField(max_length=100)
+    capteur = models.IntegerField(max_length=100)
 
     def __str__(self):
-        chaine = self.data + "," + self.timestamp + "," + capteur.objects.get(id=self.capteur).piece + " | " + capteur.objects.get(id=self.capteur).nom
+        chaine = self.data + "," + self.timestamp + "," + capteur.objects.get(id=self.capteur).piece + " | " + capteur.objects.get(id=self.capteur_id)
         return chaine
 
     def dico(self):
-        return {"data": self.data,"timestamp": self.timestamp, "capteur": self.capteur}
-
+        return {"nom": self.data,"piece": self.timestamp, "emplacement": self.capteur}
