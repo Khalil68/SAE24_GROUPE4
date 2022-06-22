@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from . import models
 
 def index(request):
-	return render(request, "index.html")
+	data = list(models.data.objects.all())
+	return render(request, "index.html",{"data":data,})
 
 
