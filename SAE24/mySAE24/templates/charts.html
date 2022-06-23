@@ -1,0 +1,91 @@
+{% extends "main.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+ <h1> Liste des données : </h1>
+ <p style='display:none' id="values_temp1"> 
+ {%for i in liste1%}
+  {{i.data}},
+ {% endfor %}
+ </p>
+ <p style='display:none' id="values_time1"> 
+ {%for i in liste1%}
+  {{i.timestamp}},
+ {% endfor %}
+ </p>
+ <p style='display:none' id="values_temp2"> 
+ {%for i in liste2%}
+ {{i.data}},
+ {% endfor %}
+ </p>
+ <p style='display:none' id="values_time2"> 
+ {%for i in liste2%}
+ {{i.timestamp}},
+ {% endfor %}
+ 
+ </p>
+<canvas id="line-chart" width="1800" height="700"></canvas>
+<script>
+function traiter(){
+	temp1 = []
+	liste = document.getElementById('values_temp1').innerHTML.replace(/[\r\n]+/gm, "").slice(0, -3).split(",")
+	for (var i=0;i<liste.length;++i){
+		temp1.push(parseFloat(liste[i]))
+	}
+	console.log(temp1)
+
+	timestamp1 = []
+	liste = document.getElementById('values_time1').innerHTML.replace(/[\r\n]+/gm, "").slice(0, -3).split(",")
+	for (var i=0;i<liste.length;++i){
+		timestamp1.push(liste[i])
+	}
+	console.log(timestamp1)
+	
+	temp2 = []
+	liste = document.getElementById('values_temp2').innerHTML.replace(/[\r\n]+/gm, "").slice(0, -3).split(",")
+	for (var i=0;i<liste.length;++i){
+		temp2.push(parseFloat(liste[i]))
+	}
+	console.log(temp2)
+
+	timestamp2 = []
+	liste = document.getElementById('values_time2').innerHTML.replace(/[\r\n]+/gm, "").slice(0, -3).split(",")
+	for (var i=0;i<liste.length;++i){
+		timestamp2.push(liste[i])
+	}
+	console.log(timestamp2)
+
+}
+
+traiter()
+
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: timestamp1,
+    datasets: [{
+        data: temp1,
+        label: "Capteur 1",
+        borderColor: "red",
+        fill: false
+      }, {
+        data: temp2,
+        label: "Capteur 2",
+        borderColor: "blue",
+        fill: false
+      },
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Evolution de la température par rapport au temps'
+    }
+  }
+});
+function reload(){
+location.reload()
+}
+setTimeout(reload,5000)
+
+</script>
+{% endblock content %}

@@ -62,17 +62,27 @@ def delete_capteur(request, id):
 
 
 def sae24_pdf(request ,id):
-    data = models.data.objects.get(pk=id)
     capteur = models.capteur.objects.get(pk=id)
+    data = models.data.objects.filter(capteur=id)
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font('Arial', size=16)
     pdf.cell(200, 10, txt="Voici les éléments de notre capteur :", ln=2, align='C')
-    pdf.cell(200, 10, txt="La température est de  " + str(data.data), ln=2, align='C')
-    pdf.cell(200, 10, txt="Il a était mis a jour à  " + str(data.timestamp), ln=2, align='C')
-    pdf.cell(200, 10, txt="Son emplacement est à " + str(capteur.emplacement), ln=2, align='C')
-    pdf.cell(200, 10, txt="Il se trouve dans " + str(capteur.piece), ln=2, align='C')
-    pdf.cell(200, 10, txt="L'ID du capteur est " + str(capteur.nom), ln=2, align='C')
+    for i in range(0,len(data)):
+        pdf.cell(200,10,txt="Mesure " + str(i+1) + ": " + " TEMPERATURE: " + str(data[i].data) + ", TIMESTAMP: " + str(data[i].timestamp) , ln = 2+i, align='C')
     pdf.output('SAE24.pdf')
     response = FileResponse(open("SAE24.pdf"))
     return response
+
+def charts(request):
+    liste = list(models.capteur.objects.all())
+    c1 = []
+    c2 = []
+    data = list(models.data.objects.all())
+    for i in data:
+        capteur = models.capteur.objects.get(id=i.capteur)
+        if int(i.capteur) == 1:
+            c1.append(i)
+        elif int(i.capteur) == 2:
+            c2.append(i)
+    return render(request, 'charts.html',{'liste1':c1,'liste2':c2})

@@ -8,4 +8,5 @@ urlpatterns = [
     path('delete/capteurs/<int:id>/',views.delete_capteur),
     path('update/capteurs/<int:id>/',views.update),
     path('sae24_pdf/<int:id>/', views.sae24_pdf),
+    path('charts/',views.charts),
 ]
