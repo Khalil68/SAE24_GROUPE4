@@ -64,13 +64,13 @@ new Chart(document.getElementById("line-chart"), {
     labels: timestamp1,
     datasets: [{
         data: temp1,
-        label: "Capteur 1",
-        borderColor: "red",
+        label: "{{capteur1.nom}}",
+        borderColor: "blue",
         fill: false
       }, {
         data: temp2,
-        label: "Capteur 2",
-        borderColor: "blue",
+        label: "{{capteur2.nom}}",
+        borderColor: "red",
         fill: false
       },
     ]

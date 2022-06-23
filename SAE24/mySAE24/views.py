@@ -26,6 +26,7 @@ def update(request, id):
             capteur = form.save(commit=False)
             capteur.id = id
             capteur.piece = models.capteur.objects.get(pk=id).piece
+            capteur.mac = models.capteur.objects.get(pk=id).mac
             capteur.save()
             return HttpResponseRedirect("/capteurs")
     else:
@@ -76,13 +77,15 @@ def sae24_pdf(request ,id):
 
 def charts(request):
     liste = list(models.capteur.objects.all())
+    capteur1 = liste[0]
+    capteur2 = liste[1]
     c1 = []
     c2 = []
     data = list(models.data.objects.all())
     for i in data:
         capteur = models.capteur.objects.get(id=i.capteur)
-        if int(i.capteur) == 1:
+        if int(i.capteur) == liste[0].id:
             c1.append(i)
-        elif int(i.capteur) == 2:
+        elif int(i.capteur) == liste[1].id:
             c2.append(i)
-    return render(request, 'charts.html',{'liste1':c1,'liste2':c2})
+    return render(request, 'charts.html', {'liste1': c1, 'liste2': c2, "capteur1": capteur1, "capteur2": capteur2})

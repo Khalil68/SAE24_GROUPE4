@@ -64,13 +64,13 @@ def traiter_donnee(id,piece,date,ti,temp):
     capteurs = cursor.fetchall()
     test = 0
     for row in capteurs:
-        nom = row["nom"]
-        if nom == id:
+        mac = row["mac"]
+        if mac == id:
             test = 1
     if test == 0:
         id_capteur += 1
-        sql = "INSERT INTO mysae24_capteur (id,nom,piece,emplacement) VALUES (%s, %s, %s, %s)"
-        val = (id_capteur,id,piece,"blank")
+        sql = "INSERT INTO mysae24_capteur (id,nom,mac,piece,emplacement) VALUES (%s, %s, %s, %s, %s)"
+        val = (id_capteur,id,id,piece,"blank")
         mycursor.execute(sql, val)
 
     sql = "INSERT INTO mysae24_data (id,data,timestamp,capteur) VALUES (%s, %s, %s, %s)"
@@ -81,8 +81,8 @@ def traiter_donnee(id,piece,date,ti,temp):
     test = 0
     for row in capteurs:
         id_capteur = row['id']
-        nom = row["nom"]
-        if nom == id:
+        mac = row["mac"]
+        if mac == id:
             test = id_capteur
     val = (id_donnee,temp,timestamp,test)
     mycursor.execute(sql, val)

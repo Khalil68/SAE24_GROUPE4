@@ -4,6 +4,7 @@ class capteur(models.Model):
     nom = models.CharField(max_length=100)
     piece = models.CharField(max_length=100)
     emplacement = models.CharField(max_length=100)
+    mac = models.CharField(max_length=100)
 
     def __str__(self):
         chaine = f"{self.nom}"
